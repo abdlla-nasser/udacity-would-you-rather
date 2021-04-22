@@ -1,0 +1,81 @@
+body {
+  font-size: 10px;
+  --green: rgb(47, 214, 67);
+  --box-shadow: 4px 6px 17px 6px rgba(173, 173, 173, 0.91);
+}
+h1 {
+  margin: 0;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 5rem;
+}
+.navigation {
+  position: absolute;
+  margin-bottom: 2rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  border-bottom: 2px solid var(--green);
+}
+.link {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.link:hover {
+  background: var(--green);
+  color: white;
+}
+.activeLink {
+  background: var(--green);
+  color: rgb(255, 255, 255) !important;
+  border-bottom: 2px solid black;
+}
+a {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+.card {
+  border: 1px solid rgb(99, 99, 99);
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem;
+  min-width: 50rem;
+  font-size: 1.1rem;
+}
+.card-header {
+  padding: 1rem;
+  background-color: rgb(199, 198, 198);
+  color: rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(99, 99, 99);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+.card > div:nth-child(n + 1) {
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+.submit-button {
+  width: 100%;
+  background-color: var(--green);
+  outline: none;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 1px solid rgb(117, 117, 117);
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  box-shadow: var(--box-shadow);
+}
