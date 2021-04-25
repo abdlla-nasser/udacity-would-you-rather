@@ -11,17 +11,18 @@ function App() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   useEffect(() => {
-    console.log(pathname);
     if (
-      ["/", "/leaderboard", "/newquestion", "/question"].includes(pathname) &&
+      ["/", "/leaderboard", "/add", "/question/:id"].includes(pathname) &&
       !user.id
-    )
+    ) {
       history.push("/signin");
+    }
     if (pathname === "/signin" && user.id) history.push("/");
     if (pathname === "/logout") {
       dispatch({ type: "LOGOUT" });
+      history.push("/signin");
     }
-  }, [pathname, dispatch, history, user.id]);
+  }, [pathname, dispatch, history, user]);
   return (
     <>
       <Navbar />

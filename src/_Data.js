@@ -1,48 +1,61 @@
+import { AvatarGenerator } from "random-avatar-generator";
+const generator = new AvatarGenerator();
+
 let users = (newUser = null) => {
   let localUsers = JSON.parse(localStorage.getItem("users"));
+  let users = {
+    sarahedo: {
+      id: "sarahedo",
+      name: "Sarah Edo",
+      avatarURL: "",
+      answers: {
+        "8xf0y6ziyjabvozdd253nd": "optionOne",
+        "6ni6ok3ym7mf1p33lnez": "optionTwo",
+        am8ehyc8byjqgar0jgpub9: "optionTwo",
+        loxhs1bqm25b708cmbf3g: "optionTwo",
+      },
+      questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"],
+    },
+    tylermcginnis: {
+      id: "tylermcginnis",
+      name: "Tyler McGinnis",
+      avatarURL: "",
+      answers: {
+        vthrdm985a262al8qx3do: "optionOne",
+        xj352vofupe1dqz9emx13r: "optionTwo",
+      },
+      questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"],
+    },
+    johndoe: {
+      id: "johndoe",
+      name: "John Doe",
+      avatarURL: "",
+      answers: {
+        xj352vofupe1dqz9emx13r: "optionOne",
+        vthrdm985a262al8qx3do: "optionTwo",
+        "6ni6ok3ym7mf1p33lnez": "optionTwo",
+      },
+      questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"],
+    },
+  };
+  if (!localUsers) localUsers = users;
   if (newUser) {
-    localUsers = { ...localUsers, ...newUser };
+    Object.keys(newUser).forEach((key) => {
+      newUser[key] = {
+        ...newUser[key],
+        avatarURL: newUser.avatarURL || generator.generateRandomAvatar(),
+      };
+    });
+    localUsers = {
+      ...localUsers,
+      ...newUser,
+    };
     localStorage.setItem("users", JSON.stringify(localUsers));
     return localUsers;
   }
   if (localUsers && Object.entries(localUsers)) {
     return localUsers;
   } else {
-    let users = {
-      sarahedo: {
-        id: "sarahedo",
-        name: "Sarah Edo",
-        avatarURL: "",
-        answers: {
-          "8xf0y6ziyjabvozdd253nd": "optionOne",
-          "6ni6ok3ym7mf1p33lnez": "optionTwo",
-          am8ehyc8byjqgar0jgpub9: "optionTwo",
-          loxhs1bqm25b708cmbf3g: "optionTwo",
-        },
-        questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"],
-      },
-      tylermcginnis: {
-        id: "tylermcginnis",
-        name: "Tyler McGinnis",
-        avatarURL: "",
-        answers: {
-          vthrdm985a262al8qx3do: "optionOne",
-          xj352vofupe1dqz9emx13r: "optionTwo",
-        },
-        questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"],
-      },
-      johndoe: {
-        id: "johndoe",
-        name: "John Doe",
-        avatarURL: "",
-        answers: {
-          xj352vofupe1dqz9emx13r: "optionOne",
-          vthrdm985a262al8qx3do: "optionTwo",
-          "6ni6ok3ym7mf1p33lnez": "optionTwo",
-        },
-        questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"],
-      },
-    };
     localStorage.setItem("users", JSON.stringify(users));
     return users;
   }
@@ -163,7 +176,7 @@ export function _saveNewUser({ id, name, avatarURL }) {
       };
       let newUsers = users(newUser);
       localStorage.setItem("users", JSON.stringify(newUsers));
-      resolve(newUsers);
+      resolve(newUser);
     }, 1000);
   });
 }
@@ -201,9 +214,11 @@ function formatQuestion({ optionOneText, optionTwoText, author }) {
 }
 
 export function _saveQuestion(question) {
+  console.log(question);
   return new Promise((res, rej) => {
     const authedUser = question.author;
     const formattedQuestion = formatQuestion(question);
+    console.log(formatQuestion);
     setTimeout(() => {
       let newQuestions = questions({
         [formattedQuestion.id]: formattedQuestion,
@@ -240,9 +255,7 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
         },
       };
       localStorage.setItem("users", JSON.stringify(scopedUsers));
-
       let scopedQuestions = questions();
-
       scopedQuestions = {
         ...scopedQuestions,
         [qid]: {

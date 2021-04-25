@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { _saveNewUser } from "../_Data";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import { Card } from "./Card";
+import { saveNewUser } from "./actions";
 import styles from "./styles.module.css";
 
 export const SignUp = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [user, setUser] = useState({
     name: "",
     avatarURL: "",
@@ -18,10 +22,14 @@ export const SignUp = (props) => {
       setError(true);
       return;
     } else {
-      _saveNewUser({
-        id: user.name.toLowerCase().replace(/\s/g, ""),
-        name: user.name,
-        avatarURL: user.avatarURL ? user.avatarURL : "",
+      dispatch(
+        saveNewUser({
+          id: user.name.toLowerCase().replace(/\s/g, ""),
+          name: user.name,
+          avatarURL: user.avatarURL ? user.avatarURL : "",
+        })
+      ).then(() => {
+        history.push("/");
       });
     }
   };

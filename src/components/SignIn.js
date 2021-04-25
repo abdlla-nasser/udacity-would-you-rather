@@ -2,7 +2,7 @@ import { Card } from "./Card";
 import { useState, useEffect } from "react";
 import styles from "./styles.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "./store";
+import { getUsers } from "./actions";
 // import { useHistory } from "react-router";
 
 const UsersOptions = ({ users }) => {
@@ -19,7 +19,7 @@ export const SignIn = (props) => {
   const [user, setUser] = useState({ id: "" });
   const [error, setError] = useState(false);
   useEffect(() => {
-    dispatch(getUsers);
+    dispatch(getUsers());
   }, [dispatch]);
   const handleInputChange = ({ target: { value } }) => {
     setError(false);
@@ -34,7 +34,7 @@ export const SignIn = (props) => {
     }
   };
   return (
-    <Card title="Sign Up">
+    <Card title="Sign In">
       <div>
         <div>
           <label htmlFor="name">Name</label>

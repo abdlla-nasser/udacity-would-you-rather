@@ -1,0 +1,18 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.tile {
+  background-color: rgb(106, 220, 134);
+  border-radius: 5px;
+  border: 1px solid black;
+  width: 7.5rem;
+  height: 7.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+.empty {
+  visibility: hidden;
+}

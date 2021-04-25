@@ -6,12 +6,20 @@ const Links = ({ pathname, links, user }) => {
     if (user.id && (link.to === "/signin" || link.to === "/signup"))
       return null;
     if (
-      ["/", "/leaderboard", "/newquestion", "/question", "/logout"].includes(
-        link.to
-      ) &&
+      ["/", "/leaderboard", "/add", "/question", "/logout"].includes(link.to) &&
       !user.id
     )
       return null;
+    if (link.to === "user" && user.id)
+      return (
+        <div
+          key={link.to}
+          className={styles.link}
+          style={{ marginLeft: "2rem" }}
+        >
+          {user.name}
+        </div>
+      );
     return (
       <Link
         to={link.to}
@@ -31,7 +39,7 @@ const linksArray = [
     text: "Home",
   },
   {
-    to: "/newquestion",
+    to: "/add",
     text: "New Question",
   },
   {
@@ -45,6 +53,9 @@ const linksArray = [
   {
     to: "/signup",
     text: "Sign Up",
+  },
+  {
+    to: "user",
   },
   {
     to: "/logout",

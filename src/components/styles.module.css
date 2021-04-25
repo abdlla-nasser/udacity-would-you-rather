@@ -66,6 +66,22 @@ a:visited {
   padding: 1rem;
   font-size: 1.2rem;
 }
+.card > .answered {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.card > div > img {
+  width: 10rem;
+}
+.tabs > button {
+  width: 50%;
+  padding: 1rem;
+  cursor: pointer;
+}
+.tabs > button:disabled {
+  color: var(--green);
+}
 .submit-button {
   width: 100%;
   background-color: var(--green);
@@ -78,4 +94,19 @@ a:visited {
   border-radius: 1rem;
   margin-top: 0.5rem;
   box-shadow: var(--box-shadow);
+}
+.question > img {
+  width: 6rem;
+}
+.question {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.question > div > a {
+  color: var(--green);
+}
+.selected-answer {
+  background-color: #e7e7e7;
+  color: var(--green);
 }

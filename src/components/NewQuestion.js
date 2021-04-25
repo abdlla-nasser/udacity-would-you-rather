@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { _saveQuestion } from "../_Data";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { Card } from "./Card";
+import { saveQuestion } from "./actions";
 
 export const NewQuestion = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((state) => state.user);
   const [options, setOptions] = useState({});
   const handleInputChange = ({ target: { value, name } }) => {
     setOptions({ ...options, [name]: value });
   };
   const handleSubmit = () => {
-    _saveQuestion({ ...options, author: user.id });
+    dispatch(saveQuestion({ ...options, author: user.id })).then((res) => {
+      history.push(`/question/${res.id}`);
+    });
   };
   return (
     <Card title="Create New Question">
