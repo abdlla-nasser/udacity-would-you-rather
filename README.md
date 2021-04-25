@@ -10,8 +10,3 @@ there's a leaderboard page that displays in order of most to least users who pos
 In the project directory, you can run:
 
 ### `yarn start`
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
