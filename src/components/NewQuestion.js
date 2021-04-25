@@ -11,7 +11,6 @@ export const NewQuestion = (props) => {
   const [options, setOptions] = useState({});
   const [disabled, setDisabled] = useState(true);
   useEffect(() => {
-    console.log(options);
     if (options.optionOneText && options.optionTwoText) setDisabled(false);
   }, [options]);
   const handleInputChange = ({ target: { value, name } }) => {

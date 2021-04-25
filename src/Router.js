@@ -7,6 +7,7 @@ import { ViewQuestion } from "./components/ViewQuestion";
 import { LeaderBoard } from "./components/LeaderBoard";
 import { Boardgame } from "./components/BoardGame";
 import { useSelector } from "react-redux";
+import { NotFound } from "./components/NotFound";
 
 const routes = [
   { path: "/", component: <Home /> },
@@ -16,6 +17,7 @@ const routes = [
   { path: "/signin", component: <SignIn />, isPublic: true },
   { path: "/signup", component: <SignUp />, isPublic: true },
   { path: "/boardgame", component: <Boardgame />, isPublic: true },
+  { path: "*", component: <NotFound /> },
 ];
 
 const PrivateRoute = ({ children, ...rest }) => {
@@ -39,7 +41,7 @@ export const Router = (props) => {
     <Switch>
       {routes.map(({ path, component, isPublic }) =>
         isPublic ? (
-          <Route exact path={path}>
+          <Route key={path} exact path={path}>
             {component}
           </Route>
         ) : (
