@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router";
+import {
+  // useHistory,
+  useParams,
+} from "react-router";
 import { Card } from "./Card";
 import { saveQuestionAnswer } from "./actions";
 import styles from "./styles.module.css";
@@ -9,19 +12,21 @@ const generator = new AvatarGenerator();
 
 export const ViewQuestion = (props) => {
   const user = useSelector((state) => state.user);
-  const history = useHistory();
-  useEffect(() => {
-    if (!user.id) {
-      console.log("user", user);
-      history.push("/signin");
-    }
-  });
+  // const history = useHistory();
+  // useEffect(() => {
+  //   if (!user.id) {
+  //     console.log("user", user);
+  //     history.push("/signin");
+  //   }
+  // });
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("");
   const [answered, setAnswered] = useState();
   let { id } = useParams();
   const questions = useSelector((state) => state.questions);
   const question = questions[id];
+  const optionOneVotes = question.optionOne.votes.length;
+  const optionTwoVotes = question.optionTwo.votes.length;
   const handleSubmit = () => {
     dispatch(
       saveQuestionAnswer({ authedUser: user.id, qid: id, answer: selected })
@@ -33,6 +38,12 @@ export const ViewQuestion = (props) => {
     if (user && user.answers && user.answers[id]) setAnswered(true);
     else setAnswered(false);
   }, [id, user]);
+  const getPercent = (optionOneVotes, optionTwoVotes) => {
+    let num = parseFloat(
+      ((optionOneVotes / (optionOneVotes + optionTwoVotes)) * 100).toFixed(2)
+    );
+    return { num: num + "%", width: num };
+  };
   if (answered && question.author) {
     return (
       <Card title={`Asked by ${question.author || ""}`}>
@@ -51,15 +62,17 @@ export const ViewQuestion = (props) => {
               }
             >
               <p>Would you rather {question.optionOne.text}</p>
+              <div className={styles.greydiv}>
+                <div
+                  className={styles.coloreddiv}
+                  style={{
+                    width: getPercent(optionOneVotes, optionTwoVotes).width,
+                  }}
+                >
+                  {getPercent(optionOneVotes, optionTwoVotes).num}
+                </div>
+              </div>
               <div>
-                {parseFloat(
-                  (
-                    (question.optionOne.votes.length /
-                      (question.optionOne.votes.length +
-                        question.optionTwo.votes.length)) *
-                    100
-                  ).toFixed(2)
-                ) + `%`}
                 <p>total votes {question.optionOne.votes.length}</p>
               </div>
             </div>
@@ -72,14 +85,16 @@ export const ViewQuestion = (props) => {
             >
               <p>Would you rather {question.optionTwo.text}</p>
               <div>
-                {parseFloat(
-                  (
-                    (question.optionTwo.votes.length /
-                      (question.optionOne.votes.length +
-                        question.optionTwo.votes.length)) *
-                    100
-                  ).toFixed(2)
-                ) + `%`}
+                <div className={styles.greydiv}>
+                  <div
+                    className={styles.coloreddiv}
+                    style={{
+                      width: getPercent(optionTwoVotes, optionOneVotes).width,
+                    }}
+                  >
+                    {getPercent(optionTwoVotes, optionOneVotes).num}
+                  </div>
+                </div>
                 <p>total votes {question.optionTwo.votes.length}</p>
               </div>
             </div>

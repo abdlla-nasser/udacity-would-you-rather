@@ -2,27 +2,20 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Router } from "./Router";
 import { Navbar } from "./components/Navbar";
 import { CenterContainer } from "./components/CenterContainer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 function App() {
-  const user = useSelector((state) => state.user);
   const history = useHistory();
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
   useEffect(() => {
-    if (
-      ["/", "/leaderboard", "/add", "/question/:id"].includes(pathname) &&
-      !user.id
-    ) {
-      history.push("/signin");
-    }
-    if (pathname === "/signin" && user.id) history.push("/");
     if (pathname === "/logout") {
       dispatch({ type: "LOGOUT" });
       history.push("/signin");
     }
-  }, [pathname, dispatch, history, user]);
+  }, [pathname, dispatch, history]);
   return (
     <>
       <Navbar />

@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { Home } from "./components/Home";
 import { NewQuestion } from "./components/NewQuestion";
 import { SignIn } from "./components/SignIn";
@@ -6,24 +6,48 @@ import { SignUp } from "./components/SignUp";
 import { ViewQuestion } from "./components/ViewQuestion";
 import { LeaderBoard } from "./components/LeaderBoard";
 import { Boardgame } from "./components/BoardGame";
+import { useSelector } from "react-redux";
 
 const routes = [
   { path: "/", component: <Home /> },
   { path: "/add", component: <NewQuestion /> },
   { path: "/question/:id", component: <ViewQuestion /> },
   { path: "/leaderboard", component: <LeaderBoard /> },
-  { path: "/signin", component: <SignIn /> },
-  { path: "/signup", component: <SignUp /> },
-  { path: "/boardgame", component: <Boardgame /> },
+  { path: "/signin", component: <SignIn />, isPublic: true },
+  { path: "/signup", component: <SignUp />, isPublic: true },
+  { path: "/boardgame", component: <Boardgame />, isPublic: true },
 ];
+
+const PrivateRoute = ({ children, ...rest }) => {
+  const user = useSelector((state) => state.user);
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        user.id ? (
+          children
+        ) : (
+          <Redirect to={{ pathname: "/signin", state: { from: location } }} />
+        )
+      }
+    />
+  );
+};
+
 export const Router = (props) => {
   return (
-    <>
-      {routes.map(({ path, component }) => (
-        <Route exact key={path} path={path}>
-          {component}
-        </Route>
-      ))}
-    </>
+    <Switch>
+      {routes.map(({ path, component, isPublic }) =>
+        isPublic ? (
+          <Route exact path={path}>
+            {component}
+          </Route>
+        ) : (
+          <PrivateRoute exact key={path} path={path}>
+            {component}
+          </PrivateRoute>
+        )
+      )}
+    </Switch>
   );
 };

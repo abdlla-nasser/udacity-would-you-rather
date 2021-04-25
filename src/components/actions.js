@@ -42,8 +42,10 @@ export function saveNewUser(user) {
     });
   };
 }
-export function getQuestions(dispatch) {
-  return _getQuestions().then((res) => {
-    dispatch({ type: "LOAD_QUESTIONS", payload: res });
-  });
+export function getQuestions() {
+  return function (dispatch) {
+    return _getQuestions().then((res) => {
+      dispatch({ type: "LOAD_QUESTIONS", payload: res });
+    });
+  };
 }

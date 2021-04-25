@@ -9,4 +9,12 @@ there's a leaderboard page that displays in order of most to least users who pos
 
 In the project directory, you can run:
 
-### `yarn start`
+### clone or download the project first
+
+### `npm install or yarn`
+
+to install project depenencies
+
+### `yarn start or npm start`
+
+to start project

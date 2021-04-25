@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Card } from "./Card";
@@ -9,6 +9,11 @@ export const NewQuestion = (props) => {
   const history = useHistory();
   const user = useSelector((state) => state.user);
   const [options, setOptions] = useState({});
+  const [disabled, setDisabled] = useState(true);
+  useEffect(() => {
+    console.log(options);
+    if (options.optionOneText && options.optionTwoText) setDisabled(false);
+  }, [options]);
   const handleInputChange = ({ target: { value, name } }) => {
     setOptions({ ...options, [name]: value });
   };
@@ -42,7 +47,9 @@ export const NewQuestion = (props) => {
           />
         </div>
       </div>
-      <button onClick={handleSubmit}>submit</button>
+      <button disabled={disabled} onClick={handleSubmit}>
+        submit
+      </button>
     </Card>
   );
 };

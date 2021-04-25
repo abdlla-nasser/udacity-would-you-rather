@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getQuestions } from "./actions";
 import { Card } from "./Card";
 import styles from "./styles.module.css";
 import { AvatarGenerator } from "random-avatar-generator";
@@ -55,8 +54,6 @@ const renderQuestions = (questions, users, text) => {
 };
 
 export const Home = (props) => {
-  const dispatch = useDispatch();
-  // const history = useHistory();
   const questions = useSelector((state) => state.questions);
   const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.user);
@@ -75,9 +72,6 @@ export const Home = (props) => {
       );
     }
   }, [questions, user]);
-  useEffect(() => {
-    dispatch(getQuestions);
-  }, [dispatch]);
   return (
     questions &&
     users && (
