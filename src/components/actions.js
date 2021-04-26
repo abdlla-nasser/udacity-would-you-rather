@@ -16,7 +16,12 @@ export function getUsers() {
 export function saveQuestionAnswer(question) {
   return function (dispatch) {
     return _saveQuestionAnswer(question).then((res) => {
-      dispatch({ type: "SAVE_QUESTION_ANSWER" });
+      dispatch({
+        type: "SAVE_QUESTION_ANSWER",
+        payload: {
+          ...question,
+        },
+      });
       dispatch({
         type: "USER_ANSWER",
         payload: { [question.qid]: question.answer },
@@ -28,8 +33,7 @@ export function saveQuestionAnswer(question) {
 export function saveQuestion(question) {
   return function (dispatch) {
     return _saveQuestion(question).then(async (res) => {
-      await dispatch({ type: "SAVE_NEW_QUESTION" });
-      await dispatch(getQuestions);
+      await dispatch({ type: "SAVE_NEW_QUESTION", payload: res });
       return res;
     });
   };

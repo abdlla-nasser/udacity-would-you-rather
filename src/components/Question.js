@@ -6,11 +6,8 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 const generator = new AvatarGenerator();
 
-export function Question({
-  question = { optionOne: { text: "" }, optionTwo: { text: "" } },
-  id,
-  author,
-}) {
+export function Question({ question, id, author }) {
+  console.log(author);
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [selected, setSelected] = useState("");

@@ -18,7 +18,7 @@ export const NewQuestion = (props) => {
   };
   const handleSubmit = () => {
     dispatch(saveQuestion({ ...options, author: user.id })).then((res) => {
-      history.push(`/question/${res.id}`);
+      history.push("/");
     });
   };
   return (

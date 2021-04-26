@@ -37,15 +37,15 @@ export const SignIn = (props) => {
       setError(true);
       return;
     } else {
-      dispatch(getQuestions());
       dispatch({ type: "SIGN_IN", payload: users[userId] });
-      let { from } = location.state || { from: { pathname: "/" } };
-      console.log(from);
-      from
-        ? from.pathname === "/notfound"
-          ? history.push("/notfound")
-          : history.replace(from)
-        : history.push("/");
+      dispatch(getQuestions()).then((res) => {
+        let { from } = location.state || { from: { pathname: "/" } };
+        from
+          ? from.pathname === "/notfound"
+            ? history.push("/notfound")
+            : history.replace(from)
+          : history.push("/");
+      });
     }
   };
   return (

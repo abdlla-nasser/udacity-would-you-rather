@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 const generator = new AvatarGenerator();
 
 export function AnsweredQuesion({ question, id, author }) {
+  console.log(author);
   const user = useSelector((state) => state.user);
   const optionOneVotes = question.optionOne.votes.length;
   const optionTwoVotes = question.optionTwo.votes.length;

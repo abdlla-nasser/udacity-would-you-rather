@@ -11,21 +11,29 @@ export const ViewQuestion = (props) => {
   const users = useSelector((state) => state.users);
   const questions = useSelector((state) => state.questions);
   const [author, setAuthor] = useState({});
-  const question = questions[id];
+  const [question, setQuestion] = useState({
+    optionOne: { text: "", votes: [] },
+    optionTwo: { text: "", votes: [] },
+  });
   useEffect(() => {
-    if (!question || !question.id) {
-      history.push("/notfound");
-    } else setAuthor(users[question.author]);
-  }, [question, history, users]);
+    if (id && Object.keys(questions).length) {
+      let question = questions[id];
+      let author = users[question.author];
+      setQuestion(question);
+      setAuthor(author);
+    }
+    if (question && question.id) {
+      setAuthor(users[question.author]);
+    }
+  }, [id, questions, users]);
   const answered = () => {
-    if (!user.answers[id] && (!question || !question.id)) {
-      history.push("/notfound");
-      return;
+    if (!user.answers[id] && (question || question.id)) {
+      return false;
     }
     if (user.answers[id]) {
       return true;
     } else {
-      return false;
+      history.push("/notfound");
     }
   };
   if (answered()) {

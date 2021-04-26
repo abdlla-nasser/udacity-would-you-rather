@@ -20,9 +20,18 @@ function questionsReducer(state = {}, action) {
     case "LOAD_QUESTIONS":
       return { ...state, ...action.payload };
     case "SAVE_QUESTION_ANSWER":
-      return { ...state };
+      let questionToEdit = state[action.payload.id];
+      let answerObj = questionToEdit[action.payload.answer];
+      questionToEdit = {
+        ...questionToEdit,
+        [action.payload.answer]: {
+          ...answerObj,
+          votes: [...answerObj.votes, action.payload.authedUser],
+        },
+      };
+      return { ...state, [action.paylaod.id]: { ...questionToEdit } };
     case "SAVE_NEW_QUESTION":
-      return { ...state };
+      return { ...state, [action.payload.id]: action.payload };
     default:
       return state;
   }
