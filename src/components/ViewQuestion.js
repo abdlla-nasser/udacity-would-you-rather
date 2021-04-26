@@ -18,7 +18,10 @@ export const ViewQuestion = (props) => {
     } else setAuthor(users[question.author]);
   }, [question, history, users]);
   const answered = () => {
-    if (!user.answers[id]) history.push("/notfound");
+    if (!user.answers[id] && (!question || !question.id)) {
+      history.push("/notfound");
+      return;
+    }
     if (user.answers[id]) {
       return true;
     } else {
