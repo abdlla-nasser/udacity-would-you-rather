@@ -12,6 +12,9 @@ h1 {
   align-items: flex-start;
   padding-top: 5rem;
 }
+.container > p {
+  font-size: 2rem;
+}
 .navigation {
   position: absolute;
   margin-bottom: 2rem;
