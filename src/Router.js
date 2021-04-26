@@ -10,14 +10,14 @@ import { useSelector } from "react-redux";
 import { NotFound } from "./components/NotFound";
 
 const routes = [
-  { path: "/", component: <Home /> },
+  { path: "/", component: <Home />, exact: true },
   { path: "/add", component: <NewQuestion /> },
   { path: "/question/:id", component: <ViewQuestion /> },
   { path: "/leaderboard", component: <LeaderBoard /> },
   { path: "/signin", component: <SignIn />, isPublic: true },
   { path: "/signup", component: <SignUp />, isPublic: true },
   { path: "/boardgame", component: <Boardgame />, isPublic: true },
-  { path: "*", component: <NotFound /> },
+  { path: "*", component: <NotFound />, isPublic: true },
 ];
 
 const PrivateRoute = ({ children, ...rest }) => {
@@ -39,13 +39,13 @@ const PrivateRoute = ({ children, ...rest }) => {
 export const Router = (props) => {
   return (
     <Switch>
-      {routes.map(({ path, component, isPublic }) =>
+      {routes.map(({ path, component, isPublic, exact = false }) =>
         isPublic ? (
-          <Route key={path} exact path={path}>
+          <Route key={path} exact={exact} path={path}>
             {component}
           </Route>
         ) : (
-          <PrivateRoute exact key={path} path={path}>
+          <PrivateRoute exact={exact} key={path} path={path}>
             {component}
           </PrivateRoute>
         )

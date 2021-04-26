@@ -4,7 +4,7 @@ import { CenterContainer } from "./CenterContainer";
 
 export function NotFound() {
   const dispatch = useDispatch();
-  dispatch({ type: "LOGOUT" });
+  // dispatch({ type: "LOGOUT" });
   const location = useLocation();
   return location.pathname.includes("/question") ? (
     <CenterContainer>question not found</CenterContainer>

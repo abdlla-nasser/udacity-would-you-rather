@@ -19,12 +19,12 @@ export const SignIn = (props) => {
   const location = useLocation();
   const history = useHistory();
   const users = useSelector((state) => state.users);
-  const [userId, setUserId] = useState("1");
+  const [userId, setUserId] = useState("");
   const [error, setError] = useState(false);
   useEffect(() => {
-    dispatch(getUsers()).then(() => {
-      if (Object.keys(users).length) {
-        setUserId(users[Object.keys(users)[0]].id);
+    dispatch(getUsers()).then((res) => {
+      if (Object.keys(res).length) {
+        setUserId(res[Object.keys(res)[0]].id);
       }
     });
   }, [dispatch]);
@@ -38,9 +38,14 @@ export const SignIn = (props) => {
       return;
     } else {
       dispatch(getQuestions());
-      dispatch({ type: "SIGN_IN", payload: { ...users[userId] } });
+      dispatch({ type: "SIGN_IN", payload: users[userId] });
       let { from } = location.state || { from: { pathname: "/" } };
-      history.replace(from);
+      console.log(from);
+      from
+        ? from.pathname === "/notfound"
+          ? history.push("/notfound")
+          : history.replace(from)
+        : history.push("/");
     }
   };
   return (
@@ -48,11 +53,7 @@ export const SignIn = (props) => {
       <div>
         <div>
           <label htmlFor="name">Name</label>
-          <select
-            id="name"
-            value={userId || users[Object.keys(users)[0]].id}
-            onChange={handleInputChange}
-          >
+          <select id="name" value={userId} onChange={handleInputChange}>
             {users && <UsersOptions users={users} />}
           </select>
           {error && <p>Please Type A User Name</p>}

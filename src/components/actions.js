@@ -7,9 +7,10 @@ import {
 } from "../_Data";
 export function getUsers() {
   return function (dispatch) {
-    return _getUsers().then((res) =>
-      dispatch({ type: "LOAD_USERS", payload: res })
-    );
+    return _getUsers().then((res) => {
+      dispatch({ type: "LOAD_USERS", payload: res });
+      return res;
+    });
   };
 }
 export function saveQuestionAnswer(question) {
